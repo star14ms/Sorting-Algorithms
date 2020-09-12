@@ -1,4 +1,6 @@
-# include <stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 void swap(int* a, int* b) {
 	int temp = *a;
@@ -24,7 +26,7 @@ void bubbleSort(int arr[], int n) {
 	    	    swap(&arr[j], &arr[j+1]);
 	    	    
 	    		printArr(arr, 0, n);
-				printf("(%d, %d ±³Ã¼)\n", arr[j], arr[j+1]);
+				printf("(%d, %d êµì²´)\n", arr[j], arr[j+1]);
 	     	}
 	    }	
 	}
@@ -42,7 +44,7 @@ void selectionSort(int arr[], int n) {
 		swap(&arr[i], &arr[min]);
 		
 		printArr(arr, 0, n);
-		printf("(¼±ÅÃ ¼ıÀÚ: %d)\n", arr[i]);
+		printf("(ì„ íƒ ìˆ«ì: %d)\n", arr[i]);
 	}
 }
 
@@ -58,7 +60,7 @@ void insertionSort(int arr[], int n) {
 		arr[j+1] = key; 
 		
 		printArr(arr, 0, n);
-		printf("(»ğÀÔ ¼ıÀÚ: %d)\n", key);
+		printf("(ì‚½ì… ìˆ«ì: %d)\n", key);
 	}
 }
 
@@ -91,14 +93,14 @@ void mergeSort(int arr[], int l, int r) {
 		merge(arr, l, m, r);
 		
 		if (l+1 == m+1) {
-			printf("\n%d¹øÂ° vs ", l+1);
+			printf("\n%dë²ˆì§¸ vs ", l+1);
 		} else {
-			printf("\n%d~%d¹øÂ° vs ", l+1, m+1);
+			printf("\n%d~%dë²ˆì§¸ vs ", l+1, m+1);
 		}
 		if (m+2 == r+1) {
-			printf("%d¹øÂ°\n", m+2);
+			printf("%dë²ˆì§¸\n", m+2);
 		} else {
-			printf("%d~%d¹øÂ°\n", m+2, r+1);
+			printf("%d~%dë²ˆì§¸\n", m+2, r+1);
 		}
 		printArr(arr, l, r+1); /// 'r' -> 'r+1'
 		printf("\n");
@@ -107,17 +109,22 @@ void mergeSort(int arr[], int l, int r) {
 
 
 int partition(int arr[], int l, int r) {
+	
+	srand(time(NULL));
+	int rng = l + (rand()%(r-l+1));
+	swap(&arr[rng], &arr[r]);
 	int pivot = arr[r];
+	
 	int i = l - 1;
 	for (j=l; j<=r-1; j++) {
-		if (arr[j] < pivot) {
+		if (arr[j] <= pivot) {
 			i++;
 			swap(&arr[i], &arr[j]);
 		}
 	}
 	swap(&arr[i+1], &arr[r]);
 	
-	printf("\nÁß½ÉÁ¡ %d\n", pivot);
+	printf("\nì¤‘ì‹¬ì  %d\n", pivot);
 	printArr(arr, l, r+1);
 	printf("\n");
 	
@@ -136,17 +143,17 @@ void quickSort(int arr[], int l, int r) {
 int main(void) {
 	int n, m;
 	while(1) {
-		printf("Á¤·ÄÇÒ ¼ıÀÚ °³¼ö : ");
+		printf("ì •ë ¬í•  ìˆ«ì ê°œìˆ˜ : ");
     	scanf("%d", &n);
 		
     	int arr[n];
-    	printf("Á¤·Ä½ÃÅ³ ¼ıÀÚµé : ");
+    	printf("ì •ë ¬ì‹œí‚¬ ìˆ«ìë“¤ : ");
     	for (i=0; i<n; i++) {
     		scanf("%d", &arr[i]);
 		}
 		
-		printf("\nÁ¤·Ä ¹æ¹ı ¼±ÅÃ\n");
-		printf("¹öºí(1)/¼±ÅÃ(2)/»ğÀÔ(3)/º´ÇÕ(4)/Äü(5) : ");
+		printf("\nì •ë ¬ ë°©ë²• ì„ íƒ\n");
+		printf("ë²„ë¸”(1)/ì„ íƒ(2)/ì‚½ì…(3)/ë³‘í•©(4)/í€µ(5) : ");
 		scanf("%d", &m); 
 		
 		printf("\n");
@@ -155,21 +162,21 @@ int main(void) {
         
 		if (m==1) { 
 			bubbleSort(arr, n);
-			printf("\n¹öºí Á¤·Ä (Bubble Sort) : ¹Ù·Î ¾ÕÀÇ ¼ö°¡ ´õ Å©¸é ±³Ã¼ÇÏ±â\n");
+			printf("\në²„ë¸” ì •ë ¬ (Bubble Sort) : ë°”ë¡œ ì•ì˜ ìˆ˜ê°€ ë” í¬ë©´ êµì²´í•˜ê¸°\n");
 		} else if (m==2) {
     		selectionSort(arr, n);
-    		printf("\n¼±ÅÃ Á¤·Ä (Selection Sort) : Á¦ÀÏ ÀÛÀº ¼ö¸¦ ¼±ÅÃÇØ ¾Õ¿¡¼­ºÎÅÍ Â÷·Ê´ë·Î ±³Ã¼ÇÏ±â\n");
+    		printf("\nì„ íƒ ì •ë ¬ (Selection Sort) : ì œì¼ ì‘ì€ ìˆ˜ë¥¼ ì„ íƒí•´ ì•ì—ì„œë¶€í„° ì°¨ë¡€ëŒ€ë¡œ êµì²´í•˜ê¸°\n");
 		} else if (m==3) {
     		insertionSort(arr, n);
-    		printf("\n»ğÀÔ Á¤·Ä (Insertion Sort) : ¾Õ¿¡¼­ºÎÅÍ ÇÏ³ª¾¿ ¼±ÅÃÇÏ¸é¼­ ¾Ë¸ÂÀº À§Ä¡¿¡ »ğÀÔÇÏ±â\n");
+    		printf("\nì‚½ì… ì •ë ¬ (Insertion Sort) : ì•ì—ì„œë¶€í„° í•˜ë‚˜ì”© ì„ íƒí•˜ë©´ì„œ ì•Œë§ì€ ìœ„ì¹˜ì— ì‚½ì…í•˜ê¸°\n");
     	} else if (m==4) {
     		mergeSort(arr, 0, n-1); /// 'n' -> 'n-1'
-    		printf("\nº´ÇÕ Á¤·Ä (Merge Sort) : Àß°Ô ÂÉ°µ ÈÄ Á¤·ÄÇÏ¸ç ÇÕÄ¡±â\n");
+    		printf("\në³‘í•© ì •ë ¬ (Merge Sort) : ì˜ê²Œ ìª¼ê°  í›„ ì •ë ¬í•˜ë©° í•©ì¹˜ê¸°\n");
 		} else {
 			quickSort(arr, 0, n-1);
 			printf("\n");
 			printArr(arr, 0, n);
-			printf("\n\nÄü Á¤·Ä (Quick Sort) : ÇÏ³ª¾¿ ¼±ÅÃÇÏ¸é¼­ ±×º¸´Ù ÀÛÀº°Ç ¿ŞÂÊ, Å«°Ç ¿À¸¥ÂÊÀ¸·Î ÀÌµ¿½ÃÅ°±â\n");
+			printf("\n\ní€µ ì •ë ¬ (Quick Sort) : í•˜ë‚˜ì”© ì„ íƒí•˜ë©´ì„œ ê·¸ë³´ë‹¤ ì‘ì€ê±´ ì™¼ìª½, í°ê±´ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì´ë™ì‹œí‚¤ê¸°\n");
 		}
 		printf("--------------------------------\n");
 	}
