@@ -158,7 +158,7 @@ void quickSort(int arr[], int l, int r) {
 
 
 int main(void) {
-	int n, m;
+	int n=1, m;
 	printf("\n여러 종류의 정렬 알고리즘 체험하기!\n");
 	printf("--------------------------------\n");
 	while(n) {
