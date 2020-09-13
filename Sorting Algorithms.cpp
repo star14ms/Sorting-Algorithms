@@ -18,7 +18,6 @@ void printArr(int arr[], int l, int r) {
 
 int i, j;
 
-
 void bubbleSort(int arr[], int n) {
 	for (i=0; i<n-1; i++) { 
 	    for (j=0; j<n-i-1; j++) {
@@ -28,9 +27,29 @@ void bubbleSort(int arr[], int n) {
 	    		printArr(arr, 0, n);
 				printf("(%d, %d 교체)\n", arr[j], arr[j+1]);
 	     	}
-	    }	
+	    }
 	}
 }
+int comparisons;
+
+void bubbleSort_v2(int arr[], int n) {
+	i = n;
+	int last;
+	while(i != 0) {
+		last = 0;
+		for (j=0; j<i-1; j++) {
+			if(arr[j] > arr[j+1]) {
+				swap(&arr[j], &arr[j+1]);
+				last = j+1;
+				
+				printArr(arr, 0, n);
+				printf("(%d, %d 교체)\n", arr[j], arr[j+1]);
+			}
+			comparisons++;
+ 		}
+		i = last; /// for문 안에 있음
+ 	}
+} 
 
 
 void selectionSort(int arr[], int n) {
@@ -142,7 +161,7 @@ int main(void) {
 	int n, m;
 	printf("\n여러 종류의 정렬 알고리즘 체험하기!\n");
 	printf("--------------------------------\n");
-	while(1) {
+	while(n) {
 		printf("정렬할 숫자 개수 : ");
     	scanf("%d", &n);
 		
@@ -153,14 +172,19 @@ int main(void) {
 		}
 		
 		printf("\n정렬 방법 선택\n");
-		printf("버블(1)/선택(2)/삽입(3)/병합(4)/퀵(5) : ");
-		scanf("%d", &m); 
+		printf("버블(1)/선택(2)/삽입(3)/병합(4)/퀵(5)/버블v2(6) : ");
+		scanf("%d", &m);
 		
 		printf("\n");
 		printArr(arr, 0, n);
 		printf("\n");
         
-		if (m==1) { 
+        if (m==6) {
+        	bubbleSort_v2(arr, n);
+        	printf("\n개선 버블 정렬 : 한 바퀴 돌 때마다 검사 범위를 마지막으로 교환한 부분 앞까지 줄임 (%d번 비교)\n", comparisons);
+        	printf("\n기존 버블 정렬 : 한 바퀴 돌 때마다 검사 범위를 뒤에서부터 하나씩 줄임 (%d번 비교)\n", n*(n-1)/2);
+        	comparisons=0;
+		} else if (m==1) { 
 			bubbleSort(arr, n);
 			printf("\n버블 정렬 (Bubble Sort) : 차례로 이웃한 두 수를 선택하여, 앞의 수가 더 크면 교체하기를 반복\n");
 		} else if (m==2) {
