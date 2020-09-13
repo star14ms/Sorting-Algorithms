@@ -37,7 +37,7 @@ void selectionSort(int arr[], int n) {
 	for (i=0; i<n-1; i++) {
 		int min = i;
 		for (j=i+1; j<n; j++) {
-			if (arr[i] > arr[j]) {
+			if (arr[min] > arr[j]) {
 				min = j;
 			}
 		}
@@ -54,8 +54,7 @@ void insertionSort(int arr[], int n) {
 	    int key = arr[i];
 		j = i-1;
 		while (j>=0 && arr[j]>key) {
-			arr[j+1] = arr[j];
-			j--;
+			arr[j+1] = arr[j--];
 		}	
 		arr[j+1] = key; 
 		
@@ -66,7 +65,7 @@ void insertionSort(int arr[], int n) {
 
 
 void merge(int a[], int l, int m, int r) {
-	int b[r+1], i=l, j=m+1, k=0; /// 'k=l' -> 'k=0' /// b[r] -> b[r+1]
+	int b[r-l+1], i=l, j=m+1, k=0; /// 'k=l' -> 'k=0' /// b[r] -> b[r+1] -> b[r-l+1]
 	while (i<=m && j<=r) {
 		if (a[i] <= a[j]) {
 			b[k++] = a[i++];
@@ -118,13 +117,12 @@ int partition(int arr[], int l, int r) {
 	int i = l - 1;
 	for (j=l; j<=r-1; j++) {
 		if (arr[j] <= pivot) {
-			i++;
-			swap(&arr[i], &arr[j]);
+			swap(&arr[++i], &arr[j]);
 		}
 	}
 	swap(&arr[i+1], &arr[r]);
 	
-	printf("\n중심점 %d\n", pivot);
+	printf("\n기준점 %d\n", pivot);
 	printArr(arr, l, r+1);
 	printf("\n");
 	
@@ -142,6 +140,8 @@ void quickSort(int arr[], int l, int r) {
 
 int main(void) {
 	int n, m;
+	printf("\n여러 종류의 정렬 알고리즘 체험하기!\n");
+	printf("--------------------------------\n");
 	while(1) {
 		printf("정렬할 숫자 개수 : ");
     	scanf("%d", &n);
@@ -162,21 +162,21 @@ int main(void) {
         
 		if (m==1) { 
 			bubbleSort(arr, n);
-			printf("\n버블 정렬 (Bubble Sort) : 바로 앞의 수가 더 크면 교체하기\n");
+			printf("\n버블 정렬 (Bubble Sort) : 차례로 이웃한 두 수를 선택하여, 앞의 수가 더 크면 교체하기를 반복\n");
 		} else if (m==2) {
     		selectionSort(arr, n);
-    		printf("\n선택 정렬 (Selection Sort) : 제일 작은 수를 선택해 앞에서부터 차례대로 교체하기\n");
-		} else if (m==3) {
+    		printf("\n선택 정렬 (Selection Sort) : 제일 작은 숫자부터 차례로 선택하여, 맨 앞쪽부터 차례로 교체하기\n");
+		} else if (m==3) { 
     		insertionSort(arr, n);
-    		printf("\n삽입 정렬 (Insertion Sort) : 앞에서부터 하나씩 선택하면서 알맞은 위치에 삽입하기\n");
+    		printf("\n삽입 정렬 (Insertion Sort) : 차례로 하나씩 선택하여, 정리된 앞쪽 배열의 알맞은 위치에 삽입하기\n");
     	} else if (m==4) {
     		mergeSort(arr, 0, n-1); /// 'n' -> 'n-1'
-    		printf("\n병합 정렬 (Merge Sort) : 잘게 쪼갠 후 정렬하며 합치기\n");
+    		printf("\n병합 정렬 (Merge Sort) : 반씩 나누기를 반복하여 잘게 쪼갠 후, 다시 합치면서 정렬\n");
 		} else {
 			quickSort(arr, 0, n-1);
 			printf("\n");
 			printArr(arr, 0, n);
-			printf("\n\n퀵 정렬 (Quick Sort) : 하나씩 선택하면서 그보다 작은건 왼쪽, 큰건 오른쪽으로 이동시키기\n");
+			printf("\n\n퀵 정렬 (Quick Sort) : 랜덤으로 하나씩 선택한 것을 기준으로 같거나 더 작은건 왼쪽, 더 큰건 오른쪽으로 보내기\n");
 		}
 		printf("--------------------------------\n");
 	}
