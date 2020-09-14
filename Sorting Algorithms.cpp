@@ -136,7 +136,8 @@ void insertionSort(int arr[], int n) {
 		int key = arr[i];
 		j = i-1;
 		while (j>=0 && arr[j]>key) {
-			arr[j+1] = arr[j--];
+			arr[j+1] = arr[j];
+			j--;
 		}	
 		arr[j+1] = key; 
 		
@@ -304,7 +305,7 @@ int main(void) {
 				
 			} else if (m==6) {
 				bubbleSort_v2(arr, n);
-				printf("\n개선 버블정렬 : 한 바퀴 돌 때마다 범위를 마지막으로 교환한 부분 앞까지 줄임 (%d번 비교)\n", comparisons);
+				printf("\n개선 버블정렬 : 한 바퀴 돌 때마다 범위를 교환이 일어나지 않기 시작하는 부분의 전까지로 한정 (%d번 비교)\n", comparisons);
 				printf("\n기존 버블정렬 : 한 바퀴 돌 때마다 범위를 뒤에서부터 하나씩 줄임 (%d번 비교)\n", n*(n-1)/2);
         		
 			} else if (m==7) {
