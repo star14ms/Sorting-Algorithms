@@ -10,15 +10,15 @@ void swap(int *a, int *b){
 
 inline__; void printArr(int *arr, int l, int r) {for (int i=l; i<=r; i++) printf("%d ", arr[i]);} /// 'a<r-1' -> 'a<r'
 
-void shuffle(int *arr, int n){ 
-	srand(time(NULL)); 
-	for (int i=0; i<n-1; i++){ 
+void shuffle(int *arr, int n){
+	srand(time(NULL));
+	for (int i=0; i<n-1; i++){
 		int rn = rand() % (n-i) + i; // i 부터 num-1 사이에 임의의 정수 생성 
-		swap(&arr[i], &arr[rn]); 
-	} 
+		swap(&arr[i], &arr[rn]);
+	}
 }
 
-int comparisons;
+int count;
 //---------------------------------------------------------------------------------------------------- Bubble Sort
 
 void bubbleSort(int *arr, int n){
@@ -36,7 +36,7 @@ void bubbleSort(int *arr, int n){
 				printf(" 교체\n");
 
 			} else printf("\n");
-			comparisons++;
+			count++;
 		}
 	}
 }
@@ -61,7 +61,7 @@ void bubbleSort_2(int *arr, int n){
 
 				printf(" 교체\n");
 			}	else printf("\n");
-			comparisons++;
+			count++;
  		}
 		i = last; /// for문 안에 있음
  	}
@@ -88,7 +88,7 @@ void shakerSort(int *arr, int n){
 
 				printf(" 교체\n");
 			}	else printf("\n");
-			comparisons++;
+			count++;
 		}
 		l = last;
 		
@@ -108,7 +108,7 @@ void shakerSort(int *arr, int n){
 				
 				printf(" 교체\n");
 			} else printf("\n");
-			comparisons++;
+			count++;
 		}
 		r = last;
 	}
@@ -225,6 +225,28 @@ void binary_insertionSort(int *arr, int l, int r){
 		else printf("(삽입 숫자: %d,", key);
 		if (i-1-k>9) printf("<-%d칸)\n\n", i-mid-1);
 		else printf(" <-%d칸)\n\n", i-mid-1);
+	}
+}
+
+//---------------------------------------------------------------------------------------------------- Shell's Sort
+
+void shellSort(int *arr, int n){
+	for (int k=n/2; k!=0; k/=2){ // 몇 바퀴 
+		if ((k % 2 == 1) && (k-1 != 0)) k += 1; /// 'k-1 != 0' 추가
+	  printf("\n비교 간격: %d\n", k);
+		for (int i=0; i+k<n; i++){ // 비교할 원소 i
+			for (int a=i; arr[a]>arr[a+k]; a-=k){ // 비교
+				if (a < 0) break;
+
+				printArr(arr, 0, n-1);
+				if (arr[a]>9) printf("(%d,", arr[a]);
+				else printf("( %d,", arr[a]);
+				if (arr[a+k]>9) printf("%d) 교체\n", arr[a+k]);
+				else printf(" %d) 교체\n", arr[a+k]);
+
+				swap (&arr[a], &arr[a+k]);
+			}
+		}
 	}
 }
 
@@ -360,6 +382,25 @@ void heapSort(int *arr, int n){
 	}
 }
 
+//---------------------------------------------------------------------------------------------------- Bogo(stupid) Sort
+
+void bogoSort(int *arr, int n){
+	while (1){
+		char isSorted = 'O';
+		for (int i=n-1; i!=0; i--){
+			if (arr[i] < arr[i-1]){
+				isSorted = 'X';
+				break;
+			}
+		}
+		if (isSorted == 'O') break;
+		shuffle(arr, n);
+		count++;
+		printf("\n");
+		printArr(arr, 0, n-1);
+	}
+}
+
 //---------------------------------------------------------------------------------------------------- main fucntion
 
 int main(void){
@@ -396,7 +437,7 @@ int main(void){
 		
 		while(1){
 			printf("정렬 방법 선택\n");
-			printf("버블(1)/선택(2)/삽입(3)/병합(4)/퀵(5)/힙(6)/\n버블++(11)/쉐이크(111)/이중 선택(22)/이진 삽입(33)/Tim(43)/숫자 재설정(other num): ");
+			printf("버블(1)/선택(2)/삽입(3)/병합(4)/퀵(5)/힙(6)/\n버블++(11)/쉐이크(111)/이중 선택(22)/이진 삽입(33)/셸(333)/Tim(43)/보고(0)/숫자 재설정(other num): ");
 			scanf("%d", &p);
 		
 			printf("\n");
@@ -407,7 +448,7 @@ int main(void){
 				bubbleSort(arr, n);
 				printf("\n");
 				printArr(arr, 0, n-1);
-				printf("\n\n버블 정렬 (Bubble Sort) : 차례로 이웃한 두 수를 선택하여, 앞의 수가 더 크면 교체하기를 반복 (비교 횟수: %d)\n", comparisons);
+				printf("\n\n버블 정렬 (Bubble Sort) : 차례로 이웃한 두 수를 선택하여, 앞의 수가 더 크면 교체하기를 반복 (비교 횟수: %d)\n", count);
 			}
 			else if (p==2){
 				printf("\n");
@@ -435,14 +476,14 @@ int main(void){
 				bubbleSort_2(arr, n);
 				printf("\n");
 				printArr(arr, 0, n-1);
-				printf("\n\n개선 버블정렬 : 한 바퀴 돌 때마다 범위를 교환이 일어나지 않기 시작하는 부분의 전까지로 한정 (비교 횟수: %d)", comparisons);
+				printf("\n\n개선 버블정렬 : 한 바퀴 돌 때마다 범위를 교환이 일어나지 않기 시작하는 부분의 전까지로 한정 (비교 횟수: %d)", count);
 				printf("\n\n기존 버블정렬 : 한 바퀴 돌 때마다 범위를 뒤에서부터 하나씩 줄임 (비교 횟수: %d))\n", n*(n-1)/2);
 			}
 			else if (p==111){
 				shakerSort(arr, n);
 				printf("\n");
 				printArr(arr, 0, n-1);
-				printf("\n\n양방향 버블정렬 (Cocktail Shaker Sort) : 양쪽 끝의 정렬 완료된 부분에 도달할 때마다 진행 방향 뒤집기 (비교 횟수: %d)", comparisons);
+				printf("\n\n양방향 버블정렬 (Cocktail Shaker Sort) : 양쪽 끝의 정렬 완료된 부분에 도달할 때마다 진행 방향 뒤집기 (비교 횟수: %d)", count);
 				printf("\n\n기존 버블정렬 : 선택 위치를 한칸씩 옮기면서, 이웃한 두 수를 선택하여, 앞의 수가 더 크면 교체하기를 반복 (비교 횟수: %d)\n", n*(n-1)/2);
 			} 
 			else if (p==22){
@@ -473,10 +514,20 @@ int main(void){
 				printf("    1\n   / ＼\n  2      3\n / ＼   / ＼\n4    5 6    7\n\n");
 				printf("        1\n       / ＼\n\n     / ＼   / ＼\n    2             3\n   / ＼   / ＼   / ＼\n  4      5      6      7\n / ＼   / ＼   / ＼   / ＼\n 8   9 10  11 12  13 14  15\n\n");
 				printf("                1\n               / ＼\n\n             / ＼   / ＼\n                           \n           / ＼   / ＼   / ＼\n                                \n         / ＼   / ＼   / ＼   / ＼\n        2                           3\n       / ＼   / ＼   / ＼   / ＼   / ＼\n\n     / ＼   / ＼   / ＼   / ＼   / ＼   / ＼\n    4             5             6             7\n   / ＼   / ＼   / ＼   / ＼   / ＼   / ＼   / ＼\n  8      9     10     11     12     13     14     15\n / ＼   / ＼   / ＼   / ＼   / ＼   / ＼   / ＼   / ＼\n16  17 18  19 20  21 22  23 24  25 26  27 28  29 30  31\n");
+			}
+			else if (p==333){
+				shellSort(arr, n);
+				printf("\n");
+				printArr(arr, 0, n-1);
+				printf("\n\n셸 정렬 (Shell's Sort) : 띄엄띄엄한 간격으로 삽입 정렬을 하며, 매 바퀴마다 그 간격을 반씩 줄여나간다.\n");
+			}
+			else if (p==0){
+				bogoSort(arr, n);
+				printf("\n\n가짜 정렬 (Bogo(stupid) Sort) : 정렬이 안되있다면 랜덤으로 데이터를 재배열하고 다시 검사 (다시 섞은 횟수: %d)\n", count);
 			} else break;
 
 			for (int i=0; i<n; i++) arr[i] = brr[i];
-			comparisons=0;
+			count=0;
 			printf("--------------------------------\n");
 		}
 		free(arr);
