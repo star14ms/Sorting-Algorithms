@@ -133,6 +133,20 @@ void binary_insertionSort(int *arr, int l, int r){
 	}
 }
 
+//---------------------------------------------------------------------------------------------------- Shell's Sort
+
+void shellSort(int *arr, int n){
+	for (int k=n/2; k!=0; k/=2){
+		if ((k % 2 == 1) && (k-1 != 0)) k += 1;
+		for (int i=0; i+k<n; i++){
+			for (int a=i; arr[a]>arr[a+k]; a-=k){
+				if (a < 0) break;
+				swap (&arr[a], &arr[a+k]);
+			}
+		}
+	}
+}
+
 //---------------------------------------------------------------------------------------------------- Merge Sort
 
 void merge(int *arr, int l, int m, int r){
@@ -221,6 +235,25 @@ void heapSort(int *arr, int n){
 	}
 }
 
+//---------------------------------------------------------------------------------------------------- Bogo(stupid) Sort
+
+int count;
+void bogoSort(int *arr, int n){
+	while (1){
+		char isSorted = 'O';
+		for (int i=n-1; i!=0; i--){
+			if (arr[i] < arr[i-1]){
+				isSorted = 'X';
+				break;
+			}
+		}
+		if (isSorted == 'O') break;
+		shuffle(arr, n);
+		count++;
+		printf("%d\n", count);
+	}
+}
+
 //---------------------------------------------------------------------------------------------------- main fucntion
 
 int main(void){
@@ -258,7 +291,7 @@ int main(void){
   
 		while(1){
 			printf("정렬 방법 선택\n");
-			printf("버블(1)/선택(2)/삽입(3)/병합(4)/퀵(5)/힙(6)/\n버블++(11)/쉐이크(111)/이중 선택(22)/이진 삽입(33)/Tim(43)/숫자 재설정(other num): ");
+			printf("버블(1)/선택(2)/삽입(3)/병합(4)/퀵(5)/힙(6)/\n버블++(11)/쉐이크(111)/이중 선택(22)/이진 삽입(33)/셸(333)/Tim(43)/보고(0)/숫자 재설정(other num): ");
 			scanf("%d", &p);
 		
 			printf("\n");
@@ -347,9 +380,24 @@ int main(void){
 				elapsed = clock();
 				printArr(arr, 0, n-1);
 				printf("\n힙 정렬 (Heap Sort) : 부모의 값이 항상 자식들의 값보다 크도록 유지하며 첫번째 값을 뒤에서부터 교환하기를 반복\n");
+			}
+			else if (p==333){
+				start = clock();
+				shellSort(arr, n);
+				elapsed = clock();
+				printArr(arr, 0, n-1);
+				printf("\n\n셸 정렬 (Shell's Sort) : 띄엄띄엄한 간격으로 삽입 정렬을 하며, 매 바퀴마다 그 간격을 반씩 줄여나간다.\n");
+			}
+			else if (p==0){
+				start = clock();
+				bogoSort(arr, n);
+				elapsed = clock();
+				printArr(arr, 0, n-1);
+				printf("\n\n가짜 정렬 (Bogo(stupid) Sort) : 정렬이 안되있다면 랜덤으로 데이터를 재배열하고 다시 검사 (다시 섞은 횟수: %d)\n", count);
+				count=0;
 			} else break;
 
-			printf("정렬 시간 : %.4f sec\n", (double)(elapsed - start)/CLOCKS_PER_SEC);
+			printf("\n정렬 시간 : %.4f sec\n", (double)(elapsed - start)/CLOCKS_PER_SEC);
 		
 			for (int i=0; i<n; i++) arr[i] = brr[i];
 			printf("--------------------------------\n");
