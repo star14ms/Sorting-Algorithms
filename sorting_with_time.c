@@ -2,15 +2,15 @@
 #include <stdlib.h>
 #include <time.h>
 
-void swap(int *a, int *b){
+inline__; swap(int *a, int *b){
 	int temp = *a;
 	*a = *b;
 	*b = temp;
 }
 
-inline__; void printArr(int *arr, int l, int r) {for (int i=l; i<=r; i++) printf("%d ", arr[i]);}
+inline__; printArr(int *arr, int l, int r) {for (int i=l; i<=r; i++) printf("%d ", arr[i]);}
 
-void shuffle(int *arr, int n){
+inline__; shuffle(int *arr, int n){
 	srand(time(NULL));
 	for (int i=0; i<n-1; i++){
 		int rn = rand() % (n-i) + i;
@@ -21,13 +21,13 @@ void shuffle(int *arr, int n){
 int count;
 //---------------------------------------------------------------------------------------------------- Bubble Sort
 
-void bubbleSort(int *arr, int n){
+inline__; bubbleSort(int *arr, int n){
 	for (int i=0; i<n-1; i++) for (int k=0; k<n-i-1; k++) if (arr[k] > arr[k+1]) swap(&arr[k], &arr[k+1]);
 }
 
 //---------------------------------------------------------------------------------------------------- Bubble Sort 2 (improved)
 
-void bubbleSort_2(int *arr, int n){
+inline__; bubbleSort_2(int *arr, int n){
 	int i = n-1;
 	while(i != 0){
 		int last = 0;
@@ -43,7 +43,7 @@ void bubbleSort_2(int *arr, int n){
 
 //---------------------------------------------------------------------------------------------------- Cocktail Shaker Sort
 
-void shakerSort(int *arr, int n){
+inline__; shakerSort(int *arr, int n){
 	int l = 0;
 	int r = n-1;
 	int last = r;
@@ -69,7 +69,7 @@ void shakerSort(int *arr, int n){
 
 //---------------------------------------------------------------------------------------------------- Selection Sort
 
-void selectionSort(int *arr, int n){
+inline__; selectionSort(int *arr, int n){
 	for (int i=0; i<n-1; i++){
 		int min = i;
 		for (int k=i+1; k<n; k++) if (arr[min] > arr[k]) min = k;
@@ -79,7 +79,7 @@ void selectionSort(int *arr, int n){
 
 //---------------------------------------------------------------------------------------------------- Double Selection Sort
 
-void double_selection_Sort(int *arr, int n){
+inline__; double_selection_Sort(int *arr, int n){
 	for (int i=0; i<n/2; i++){
 		int min = i;
 		int max = n-i-1;
@@ -95,7 +95,7 @@ void double_selection_Sort(int *arr, int n){
 
 //---------------------------------------------------------------------------------------------------- Insertion Sort
 
-void insertionSort(int *arr, int l, int r){
+inline__; insertionSort(int *arr, int l, int r){
 	for (int i=l+1; i<=r; i++){
 		int key = arr[i];
 		int k = i-1;
@@ -109,7 +109,7 @@ void insertionSort(int *arr, int l, int r){
 
 //---------------------------------------------------------------------------------------------------- Binary Insertion Sort
 
-void binary_insertionSort(int *arr, int l, int r){
+inline__; binary_insertionSort(int *arr, int l, int r){
 	for (int i=l+1; i<=r; i++){
 		int key = arr[i];
 		int left=l, right=i-1;
@@ -134,9 +134,9 @@ void binary_insertionSort(int *arr, int l, int r){
 	}
 }
 
-//---------------------------------------------------------------------------------------------------- Shell's Sort
+//---------------------------------------------------------------------------------------------------- Shell Sort
 
-void shellSort(int *arr, int n){
+inline__; shellSort(int *arr, int n){
 	for (int k=n/2; k!=0; k/=2){
 		if ((k % 2 == 1) && (k-1 != 0)) k += 1;
 		for (int i=0; i+k<n; i++){
@@ -150,7 +150,7 @@ void shellSort(int *arr, int n){
 
 //---------------------------------------------------------------------------------------------------- Merge Sort
 
-void merge(int *arr, int l, int m, int r){
+inline__; merge(int *arr, int l, int m, int r){
 	int brr[r-l+1], i=l, j=m+1;
 	int k = 0;
 	while (i<=m && j<=r){
@@ -169,7 +169,7 @@ void merge(int *arr, int l, int m, int r){
 	for (k-=1; k>=0; k--) arr[l+k] = brr[k];
 }
 
-void mergeSort(int *arr, int l, int r){
+inline__; mergeSort(int *arr, int l, int r){
 	if (l < r){
 		int m = (l+r)/2;
 		mergeSort(arr, l, m);
@@ -180,7 +180,7 @@ void mergeSort(int *arr, int l, int r){
 
 //---------------------------------------------------------------------------------------------------- Tim Sort
 
-void timSort(int *arr, int l, int r){
+inline__; timSort(int *arr, int l, int r){
 	if (r-l+1 <= 16) insertionSort(arr, l, r);
 	else {
 		int m = (l+r)/2;
@@ -192,7 +192,7 @@ void timSort(int *arr, int l, int r){
 
 //---------------------------------------------------------------------------------------------------- Quick Sort
 
-int partition(int *arr, int l, int r){
+inline__; partition(int *arr, int l, int r){
 	srand(time(NULL));
 	int rng = l + (rand()%(r-l+1));
 	swap(&arr[rng], &arr[r]);
@@ -204,7 +204,7 @@ int partition(int *arr, int l, int r){
 	return (i+1);
 }
 
-void quickSort(int *arr, int l, int r){
+inline__; quickSort(int *arr, int l, int r){
 	if (l < r){
 		int p = partition(arr, l, r);
 		quickSort(arr, l, p-1);
@@ -214,7 +214,7 @@ void quickSort(int *arr, int l, int r){
 
 //---------------------------------------------------------------------------------------------------- Heap Sort
 
-void heapSort(int *arr, int n){
+inline__; heapSort(int *arr, int n){
 	for (int i=n; i!=0; i--){
 		for (int key=n-i+1; key-1!=0; key/=2){
 			if (arr[key-1] > arr[key/2-1]) swap(&arr[key-1], &arr[key/2-1]);
@@ -238,7 +238,7 @@ void heapSort(int *arr, int n){
 
 //---------------------------------------------------------------------------------------------------- Intro Sort
 
-void heapSort_intro(int *arr, int l, int r){
+inline__; heapSort_intro(int *arr, int l, int r){
 	for (int i=r-l+1; i!=0; i--){
 		for (int key=r-l+1-i+1; key-1!=0; key/=2){
 			if (arr[l+key-1] > arr[l+key/2-1]) swap(&arr[l+key-1], &arr[l+key/2-1]);
@@ -260,7 +260,7 @@ void heapSort_intro(int *arr, int l, int r){
 	}
 }
 
-void introSort(int *arr, int l, int r){
+inline__; introSort(int *arr, int l, int r){
 	count++;
 	if (l < r){
 		if (count > 4) heapSort_intro(arr, l, r);
@@ -275,7 +275,7 @@ void introSort(int *arr, int l, int r){
 
 //---------------------------------------------------------------------------------------------------- Bogo(stupid) Sort
 
-void bogoSort(int *arr, int n){
+inline__; bogoSort(int *arr, int n){
 	while (1){
 		char isSorted = 'O';
 		for (int i=n-1; i!=0; i--){
