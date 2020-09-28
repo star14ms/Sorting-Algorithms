@@ -260,22 +260,33 @@ inline__; heapSort_intro(int *arr, int l, int r){
 	}
 }
 
-inline__; introSort(int *arr, int l, int r){
+inline__; quickSort_intro(int *arr, int l, int r){
 	count++;
-	if (l < r){
-		if (count > 4) heapSort_intro(arr, l, r);
-		else {
-  	int p = partition(arr, l, r);
-		introSort(arr, l, p-1);
-		introSort(arr, p+1, r);
-		}
+	if ((count > 2*ceil(log2(r+1))) && (r-l+1 > 16)) heapSort_intro(arr, l, r);
+	else if (l < r){
+		int p = partition(arr, l, r);
+		quickSort_intro(arr, l, p-1);
+		quickSort_intro(arr, p+1, r);
 	}
 	count--;
+}
+
+inline__; introSort(int *arr, int l, int r){
+	if (r-l+1 <= 16){
+		insertionSort(arr, l, r);
+		return;
+	}
+	quickSort_intro(arr, l, r);
+	insertionSort(arr, l, r);
 }
 
 //---------------------------------------------------------------------------------------------------- Bogo(stupid) Sort
 
 inline__; bogoSort(int *arr, int n){
+	if (n > 6){
+		printf("\n오늘 안에 정렬 못 함");
+		return;
+	}
 	while (1){
 		char isSorted = 'O';
 		for (int i=n-1; i!=0; i--){
@@ -322,9 +333,8 @@ int main(void){
 		for (int i=0; i<n; i++) brr[i] = arr[i];
 		if (m==1){
 			shuffle(arr, n);
-			printf("\n섞인 숫자 보기 skip(1)/show(other num) : ");
-			scanf("%d", &m);
-			if (m!=1){
+			if (n<=1000){
+				printf("\n");
 				printArr(arr, 0, n-1);
 				printf("\n");
 			}
@@ -429,11 +439,10 @@ int main(void){
 
 			printf("\n정렬 시간 : %.4f sec\n", (double)(elapsed - start)/CLOCKS_PER_SEC);
 
-			printf("\n정렬된 숫자 보기 skip(1)/show(other num) : ");
-			scanf("%d", &m);
-			if (m!=1){
+			if (n<=1000){
+				printf("\n");
 				printArr(arr, 0, n-1);
-		  	printf("\n");
+				printf("\n");
 			}
 
 			for (int i=0; i<n; i++) arr[i] = brr[i];

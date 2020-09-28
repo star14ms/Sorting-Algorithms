@@ -25,7 +25,7 @@ inline__; bubbleSort(int *arr, int n){
 	for (int i=0; i<n-1; i++){ 
 		printf("\n처음으로! (%d번째까지 비교)\n", n-i-1);
 		for (int k=0; k<n-i-1; k++){
-			printArr(arr, 0, n-1);
+			if (n<=1000) printArr(arr, 0, n-1);
 			if (arr[k]>9) printf("(%d,", arr[k]);
 			else printf("( %d,", arr[k]);
 			if (arr[k+1]>9) printf("%d)", arr[k+1]);
@@ -49,7 +49,7 @@ inline__; bubbleSort_2(int *arr, int n){
 		printf("\n처음으로! (%d번째까지 비교)\n", i+1);
 		int last = 0;
 		for (int k=0; k<i; k++){ /// i-1 -> i
-			printArr(arr, 0, n-1);
+			if (n<=1000) printArr(arr, 0, n-1);
 		  if (arr[k]>9) printf("(%d,", arr[k]);
 			else printf("( %d,", arr[k]);
 			if (arr[k+1]>9) printf("%d)", arr[k+1]);
@@ -76,7 +76,7 @@ inline__; shakerSort(int *arr, int n){
 	while (l < r){
 		printf("\n방향 전환! (%d~%d번째까지 비교)\n", r+1, l+1);
 		for (int k=r; k>l; k--){
-			printArr(arr, 0, n-1);
+			if (n<=1000) printArr(arr, 0, n-1);
 		  if (arr[k-1]>9) printf("(%d,", arr[k-1]);
 			else printf("( %d,", arr[k-1]);
 			if (arr[k]>9) printf("%d)", arr[k]);
@@ -96,7 +96,7 @@ inline__; shakerSort(int *arr, int n){
 
 		printf("\n방향 전환! (%d~%d번째까지 비교)\n", l+1, r+1);
 		for (int k=l; k<r; k++){
-			printArr(arr, 0, n-1);
+			if (n<=1000) printArr(arr, 0, n-1);
 		  if (arr[k]>9) printf("(%d,", arr[k]);
 			else printf("( %d,", arr[k]);
 			if (arr[k+1]>9) printf("%d)", arr[k+1]);
@@ -123,7 +123,7 @@ inline__; selectionSort(int *arr, int n){
 			if (arr[min] > arr[k]) 
 			min = k;
 		}
-		printArr(arr, 0, n-1);
+		if (n<=1000) printArr(arr, 0, n-1);
 		if (arr[i]>9) printf("(%d,", arr[i]);
 		else printf("( %d,", arr[i]);
 		if (arr[min]>9) printf("%d) 교체\n", arr[min]);
@@ -145,7 +145,7 @@ inline__; double_selection_Sort(int *arr, int n){
 		}
 		if (max == i) max = min;
 
-		printArr(arr, 0, n-1);
+		if (n<=1000) printArr(arr, 0, n-1);
 		if (arr[i]>9) printf("(%d,", arr[i]);
 		else printf("( %d,", arr[i]);
 		if (arr[min]>9) printf("%d) ", arr[min]);
@@ -238,7 +238,7 @@ inline__; shellSort(int *arr, int n){
 			for (int a=i; arr[a]>arr[a+k]; a-=k){ // 비교
 				if (a < 0) break;
 
-				printArr(arr, 0, n-1);
+				if (n<=1000) printArr(arr, 0, n-1);
 				if (arr[a]>9) printf("(%d,", arr[a]);
 				else printf("( %d,", arr[a]);
 				if (arr[a+k]>9) printf("%d) 교체\n", arr[a+k]);
@@ -278,9 +278,9 @@ inline__; mergeSort(int *arr, int l, int r){
 		mergeSort(arr, m+1, r);
 		
 		if (l+1 == m+1){
-			printf("\n%d번째 vs ", l+1);
+			printf("\n\n%d번째 vs ", l+1);
 		} else {
-			printf("\n%d~%d번째 vs ", l+1, m+1);
+			printf("\n\n%d~%d번째 vs ", l+1, m+1);
 		}
 		if (m+2 == r+1){
 			printf("%d번째\n", m+2);
@@ -327,7 +327,7 @@ inline__; timSort(int *arr, int l, int r){
 
 //---------------------------------------------------------------------------------------------------- Quick Sort
 
-int partition(int *arr, int l, int r){
+inline__; partition(int *arr, int l, int r){
 	srand(time(NULL));
 	int rng = l + (rand()%(r-l+1));
 	swap(&arr[rng], &arr[r]);
@@ -337,7 +337,7 @@ int partition(int *arr, int l, int r){
 	for (int k=l; k<=r-1; k++) if (arr[k] <= pivot) swap(&arr[++i], &arr[k]);
 	swap(&arr[i+1], &arr[r]);
 	
-	printf("기준 %d\n", pivot);
+	printf("(기준 %d)\n", pivot);
 	printArr(arr, l, r);
 	printf("\n");
 
@@ -346,6 +346,7 @@ int partition(int *arr, int l, int r){
 
 inline__; quickSort(int *arr, int l, int r){
 	if (l < r){
+		printf("\n%d~%d번째 퀵정렬 ", l+1, r+1);
 		int p = partition(arr, l, r);
 		quickSort(arr, l, p-1);
 		quickSort(arr, p+1, r);
@@ -361,7 +362,7 @@ inline__; heapSort(int *arr, int n){
 			else break;
 		}
 	}
-  printArr(arr, 0, n-1);
+  if (n<=1000) printArr(arr, 0, n-1);
 	printf("최대 힙 완성\n\n");
 
 	if (n>=7){
@@ -374,11 +375,11 @@ inline__; heapSort(int *arr, int n){
   	arr[6] > 9 ? printf("  %d ...\n\n", arr[6]) : printf("   %d ...\n\n", arr[6]);
 	}
 	
-	int win; // 두 자식 중에 이긴놈 위치 (서수)
+	int win; // 두 자식 중 이긴놈 위치 (서수)
 	int r = n-1; // i : 힙의 마지막 (인덱스)
 	while (r != 0){
 		swap(&arr[0], &arr[r--]);
-		printArr(arr, 0, n-1);
+		if (n<=1000) printArr(arr, 0, n-1);
 		printf("(%d, %d) 교체 | ", arr[0], arr[r+1]);
 		for (int key=1; key*2<=r+1; key=win){ // key : 자식과 싸울 부모 위치 (서수) // 자식이 하나라도 존재하는 동안	
 			if (key*2 == r+1) printf("%d vs %d | ", arr[key-1], arr[key*2-1]);
@@ -398,8 +399,8 @@ inline__; heapSort(int *arr, int n){
 
 inline__; heapSort_intro(int *arr, int l, int r){
 	for (int i=r-l+1; i!=0; i--){
-		for (int key=r-l+1-i+1; key-1!=0; key/=2){ // key : 부모 존재 확인할 놈 위치 (서수) // 오름차순으로 x
-			if (arr[l+key-1] > arr[l+key/2-1]) swap(&arr[l+key-1], &arr[l+key/2-1]); /// -1 추가
+		for (int key=r-l+1-i+1; key-1!=0; key/=2){
+			if (arr[l+key-1] > arr[l+key/2-1]) swap(&arr[l+key-1], &arr[l+key/2-1]);
 			else break;
 		}
 	}
@@ -416,47 +417,84 @@ inline__; heapSort_intro(int *arr, int l, int r){
   	arr[6] > 9 ? printf("  %d ...\n\n", arr[6]) : printf("   %d ...\n\n", arr[6]);
 	}
 
-	int win; // 두 자식 중에 이긴놈 위치 (서수)
-	int end = r; // i : 힙의 마지막 (인덱스)
+	int win;
+	int end = r;
 	while (end != l){
 		swap(&arr[l], &arr[end--]);
 		printArr(arr, l, r);
 		printf("(%d, %d) 교체 | ", arr[l], arr[end+1]);
-		for (int key=1; l+key*2<=end+1; key=win){ // key : 자식과 싸울 부모 위치 (서수) // 자식이 하나라도 존재하는 동안	
+		for (int key=1; l+key*2<=end+1; key=win){
 			if (l+key*2 == end+1) printf("%d vs %d | ", arr[l+key-1], arr[l+key*2-1]);
 			else printf("%d vs (%d vs %d) | ", arr[l+key-1], arr[l+key*2-1], arr[l+key*2]);
 			if ((l+key*2 == end+1) || (arr[l+key*2-1] > arr[l+key*2]))
 				win = key*2;
 			else
 				win = key*2+1;
-			if (arr[l+key-1] < arr[l+win-1]) swap(&arr[l+key-1], &arr[l+win-1]); // 부모 비교 x, win도 서수로 표현 x, -1 추가 x
+			if (arr[l+key-1] < arr[l+win-1]) swap(&arr[l+key-1], &arr[l+win-1]);
 			else break;
 		}
 		printf("\n");
 	}
 }
 
-inline__; introSort(int *arr, int l, int r){
+int partition_none_info(int *arr, int l, int r){
+	srand(time(NULL));
+	int rng = l + (rand()%(r-l+1));
+	swap(&arr[rng], &arr[r]);
+	int pivot = arr[r];
+	
+	int i = l-1;
+	for (int k=l; k<=r-1; k++) if (arr[k] <= pivot) swap(&arr[++i], &arr[k]);
+	swap(&arr[i+1], &arr[r]);
+	return (i+1);
+}
+
+inline__; quickSort_intro(int *arr, int l, int r){
 	count++;
-	if (l < r){
-		if (count > 4) {
-			printf("\n%d~%d번째 힙정렬\n", l+1, r+1);
-			printArr(arr, l, r);
-			heapSort_intro(arr, l, r);
-		}
-		else {
-		printf("\n%d~%d번째 퀵정렬\n", l+1, r+1);
-  	int p = partition(arr, l, r);
-		introSort(arr, l, p-1);
-		introSort(arr, p+1, r);
-		}
+	if ((count > 2*ceil(log2(r+1))) && (r-l+1 > 16)){
+		printf("\n%d~%d번째 힙정렬\n", l+1, r+1);
+		printArr(arr, l, r);
+		heapSort_intro(arr, l, r);
+	}
+	else if (l < r){
+		printf("\n%d~%d번째 퀵정렬", l+1, r+1);
+		int p = partition_none_info(arr, l, r);
+		quickSort_intro(arr, l, p-1);
+		quickSort_intro(arr, p+1, r);
 	}
 	count--;
+}
+
+inline__; insertionSort_none_info(int *arr, int l, int r){
+	for (int i=l+1; i<=r; i++){
+		int key = arr[i];
+		int k = i-1;
+		while (k>=l && arr[k]>key){
+			arr[k+1] = arr[k];
+			k--;
+		}
+		arr[k+1] = key;
+	}
+}
+
+inline__; introSort(int *arr, int l, int r){
+	if (r-l+1 <= 16){
+		printf("\n%d~%d번째 삽입정렬\n", l+1, r+1);
+		insertionSort(arr, l, r);
+		return;
+	}
+	quickSort_intro(arr, l, r);
+	printf("\n\n%d~%d번째 삽입정렬\n", l+1, r+1);
+	insertionSort_none_info(arr, l, r);
 }
 
 //---------------------------------------------------------------------------------------------------- Bogo(stupid) Sort
 
 inline__; bogoSort(int *arr, int n){
+	if (n > 6){
+		printf("\n오늘 안에 정렬 못 함");
+		return;
+	}
 	while (1){
 		char isSorted = 'O';
 		for (int i=n-1; i!=0; i--){
@@ -496,15 +534,23 @@ int main(void){
 			printf("정렬시킬 숫자들 : ");
     	for (int i=0; i<n; i++) scanf("%d", &arr[i]);
 		}
-		printArr(arr, 0, n-1);
+		if (n<=1000){
+			printf("\n");
+			printArr(arr, 0, n-1);
+			printf("\n");
+		}
 
 
-		printf("\n\n순서를 섞을까? Yes(1)/No(other num) : ");
+		printf("\n순서를 섞을까? Yes(1)/No(other num) : ");
 		scanf("%d", &m);
 		if (m==1) shuffle(arr, n);
 		for (int i=0; i<n; i++) brr[i] = arr[i];
-		printArr(arr, 0, n-1);
-		printf("\n--------------------------------\n");
+		if (n<=1000){
+			printf("\n");
+			printArr(arr, 0, n-1);
+			printf("\n");
+		}
+		printf("--------------------------------\n");
 
 		
 		while(1){
@@ -513,20 +559,20 @@ int main(void){
 			scanf("%d", &m);
 		
 			printf("\n");
-			printArr(arr, 0, n-1);
+			if (n<=1000) printArr(arr, 0, n-1);
 			printf("\n");
 
 			if (m==1){
 				bubbleSort(arr, n);
 				printf("\n");
-				printArr(arr, 0, n-1);
+				if (n<=1000) printArr(arr, 0, n-1);
 				printf("\n\n버블 정렬 (Bubble Sort) : 차례로 이웃한 두 수를 선택하여, 앞의 수가 더 크면 교체하기를 반복 (비교 횟수: %d)\n", count);
 			}
 			else if (m==2){
 				printf("\n");
 				selectionSort(arr, n);
 				printf("\n");
-				printArr(arr, 0, n-1);
+				if (n<=1000) printArr(arr, 0, n-1);
 				printf("\n\n선택 정렬 (Selection Sort) : 제일 작은 숫자부터 차례로 선택하여, 맨 앞쪽부터 차례로 교체하기\n");
 			}
 			else if (m==3){
@@ -542,20 +588,20 @@ int main(void){
 				printf("\n");
 				quickSort(arr, 0, n-1);
 				printf("\n");
-				printArr(arr, 0, n-1);
+				if (n<=1000) printArr(arr, 0, n-1);
 				printf("\n\n퀵 정렬 (Quick Sort) : 랜덤으로 하나씩 선택한 것을 기준으로 더 작거나 같은건 왼쪽, 더 큰건 오른쪽으로 보내기\n");
 			}
 			else if (m==11){
 				bubbleSort_2(arr, n);
 				printf("\n");
-				printArr(arr, 0, n-1);
+				if (n<=1000) printArr(arr, 0, n-1);
 				printf("\n\n개선 버블정렬 : 한 바퀴 돌 때마다 범위를 교환이 일어나지 않기 시작하는 부분의 전까지로 한정 (비교 횟수: %d)", count);
 				printf("\n\n기존 버블정렬 : 한 바퀴 돌 때마다 범위를 뒤에서부터 하나씩 줄임 (비교 횟수: %d))\n", n*(n-1)/2);
 			}
 			else if (m==111){
 				shakerSort(arr, n);
 				printf("\n");
-				printArr(arr, 0, n-1);
+				if (n<=1000) printArr(arr, 0, n-1);
 				printf("\n\n양방향 버블정렬 (Cocktail Shaker Sort) : 양쪽 끝의 정렬 완료된 부분에 도달할 때마다 진행 방향 뒤집기 (비교 횟수: %d)", count);
 				printf("\n\n기존 버블정렬 : 선택 위치를 한칸씩 옮기면서, 이웃한 두 수를 선택하여, 앞의 수가 더 크면 교체하기를 반복 (비교 횟수: %d)\n", n*(n-1)/2);
 			} 
@@ -563,7 +609,7 @@ int main(void){
 				printf("\n");
 				double_selection_Sort(arr, n);
 				printf("\n");
-				printArr(arr, 0, n-1);
+				if (n<=1000) printArr(arr, 0, n-1);
 				printf("\n\n이중 선택 정렬 (Double Selection Sort) : 최솟값, 최댓값을 선택해 그 부분의 양 끝과 바꾸기를 반복");
 				printf("\n\n(선택 정렬 : 최솟값만 찾아 바꿈)\n");
 			}
@@ -589,7 +635,7 @@ int main(void){
 			else if (m==333){
 				shellSort(arr, n);
 				printf("\n");
-				printArr(arr, 0, n-1);
+				if (n<=1000) printArr(arr, 0, n-1);
 				printf("\n\n셸 정렬 (Shell's Sort) : 띄엄띄엄한 간격으로 삽입 정렬을 하며, 매 바퀴마다 그 간격을 반씩 줄여나간다.\n");
 			}
 			else if (m==0){
@@ -599,7 +645,7 @@ int main(void){
 			else if (m==56){
 				introSort(arr, 0, n-1);
 				printf("\n");
-				printArr(arr, 0, n-1);
+				if (n<=1000) printArr(arr, 0, n-1);
 				printf("\n\n인트로 정렬 (Intro Sort) : 퀵 정렬에서 재귀 횟수가 많아지면 힙 정렬\n");
 			} else break;
 
