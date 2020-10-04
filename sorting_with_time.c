@@ -274,10 +274,10 @@ inline__; quickSort_intro(int *arr, int l, int r){
 inline__; introSort(int *arr, int l, int r){
 	if (r-l+1 <= 16){
 		insertionSort(arr, l, r);
-		return;
-	}
-	quickSort_intro(arr, l, r);
-	insertionSort(arr, l, r);
+	} else {
+    quickSort_intro(arr, l, r);
+    insertionSort(arr, l, r);
+  }
 }
 
 //---------------------------------------------------------------------------------------------------- Bogo(stupid) Sort
@@ -285,21 +285,21 @@ inline__; introSort(int *arr, int l, int r){
 inline__; bogoSort(int *arr, int n){
 	if (n > 6){
 		printf("\n오늘 안에 정렬 못 함");
-		return;
-	}
-	while (1){
-		char isSorted = 'O';
-		for (int i=n-1; i!=0; i--){
-			if (arr[i] < arr[i-1]){
-				isSorted = 'X';
-				break;
-			}
-		}
-		if (isSorted == 'O') break;
-		shuffle(arr, n);
-		count++;
-		printf("%d\n", count);
-	}
+	} else {
+	  while (1){
+		  char isSorted = 'O';
+		  for (int i=n-1; i!=0; i--){
+		  	if (arr[i] < arr[i-1]){
+			  	isSorted = 'X';
+				  break;
+			  }
+		  }
+		  if (isSorted == 'O') break;
+		  shuffle(arr, n);
+		  count++;
+		  printf("%d\n", count);
+	  }
+  }
 }
 
 //---------------------------------------------------------------------------------------------------- main fucntion
